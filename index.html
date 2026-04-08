@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yamaha Mio 1 Concepts</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>Yamaha Mio 1 Concepts</h1>
+    <p>Select your build style</p>
+</header>
+
+<div class="container">
+
+   
+    <div class="card">
+        <h2>Racing Concept</h2>
+        <img src="racing.jpg" alt="Racing Mio" class="clickable-img" onclick="openModal(this)">
+        <p>Performance build for speed.</p>
+        <a href="racing.html">View Concept</a>
+    </div>
+
+   
+    <div class="card">
+        <h2>Show Bike Concept</h2>
+        <img src="show.jpg" alt="Show Bike Mio" class="clickable-img" onclick="openModal(this)">
+        <p>Clean and aesthetic build.</p>
+        <a href="showbike.html">View Concept</a>
+    </div>
+
+  
+    <div class="card">
+        <h2>Daily Concept</h2>
+        <img src="daily.jpeg" alt="Daily Mio" class="clickable-img" onclick="openModal(this)">
+        <p>Comfortable everyday ride.</p>
+        <a href="daily.html">View Concept</a>
+    </div>
+
+</div>
+
+
+<div id="imgModal" class="modal" onclick="closeModal()">
+    <img id="modalImg">
+</div>
+
+<script>
+function openModal(img) {
+    document.getElementById("imgModal").style.display = "block";
+    document.getElementById("modalImg").src = img.src;
+}
+function closeModal() {
+    document.getElementById("imgModal").style.display = "none";
+}
+</script>
+
+</body>
+</html>
