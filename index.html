@@ -2,58 +2,212 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Yamaha Mio 1 Concepts</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIO 1 | MEGA TRINITY SHOWROOM</title>
+    <img src="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;700;900&family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+
+        img{
+            width:10rem;
+            height:20rem;
+            padding-bottom:10rem;
+
+        }
+        :root {
+            --primary: #00d4ff;  
+            --secondary: #ff00ff; 
+            --daily: #00ff88;    
+            --dark: #ffffff;
+            --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+        body { background: white; color: black; font-family: 'Montserrat', sans-serif; overflow-x: hidden; }
+
+        
+        body::before {
+            content: ""; position: fixed; inset: 0;
+            background: url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+            opacity: 0.05; pointer-events: none; z-index: 1;
+        }
+
+        #cursor {
+            width: 20px; height: 20px; border: 2px solid var(--primary); border-radius: 50%;
+            position: fixed; pointer-events: none; z-index: 10000; transition: transform 0.1s;
+            mix-blend-mode: difference; transform: translate(-50%, -50%);
+        }
+
+       
+        #guide-modal {
+            position: fixed; inset: 0; background: rgba(255,255,255,0.98); z-index: 9999;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+            backdrop-filter: blur(30px);
+            color: black;
+        }
+        .parts-gallery {
+            display: flex; gap: 25px; width: 95%; overflow-x: auto; padding: 50px 30px;
+            scroll-behavior: smooth; scrollbar-width: none;
+        }
+        .parts-gallery::-webkit-scrollbar { display: none; }
+        .part-item { flex: 0 0 300px; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.1); border-radius: 30px; padding: 20px; text-align: center; }
+        .part-img { width: 100%; height: 200px; border-radius: 20px; background: #ddd; margin-bottom: 15px; overflow: hidden; }
+        .part-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        
+        .hero { height: 70vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        .hero h1 { font-family: 'Bebas Neue'; font-size: clamp(80px, 12vw, 150px); letter-spacing: 20px; margin-bottom: 0; color: black; }
+        .hero p { letter-spacing: 12px; opacity: 0.6; font-size: 14px; color: black; }
+
+        
+        .container { padding: 0 20px 150px; max-width: 1400px; margin: auto; position: relative; z-index: 2; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 50px; }
+
+        .concept-card {
+            background: transparent; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 50px; padding: 30px; 
+            position: relative; overflow: hidden; display: flex; flex-direction: column;
+        }
+
+       
+        .model-preview {
+            width: 100%; height: 350px; background: #ddd; border-radius: 35px;
+            margin-bottom: 25px; overflow: hidden; border: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .model-preview img { width: 100%; height: 100%; object-fit: cover; transition: 0.8s; opacity: 0.7; }
+
+        .card-title { font-family: 'Bebas Neue'; font-size: 45px; margin-bottom: 10px; color: black; }
+        .view-btn {
+            margin-top: 20px; padding: 15px; border-radius: 50px; border: 1px solid var(--card-color);
+            background: transparent; color: black; font-family: 'Bebas Neue'; font-size: 18px;
+            letter-spacing: 2px; transition: 0.3s;
+        }
+        p { color: black; }
+
+        footer { padding: 100px; text-align: center; opacity: 0.5; font-size: 10px; letter-spacing: 5px; color: black; }
+        .close-modal { margin-top: 30px; padding: 15px 50px; border-radius: 50px; border: 1px solid black; background: transparent; color: black; font-family: 'Bebas Neue'; cursor: pointer; }
+    </style>
 </head>
 <body>
 
-<header>
-    <h1>Yamaha Mio 1 Concepts</h1>
-    <p>Select your build style</p>
-</header>
+    <div id="cursor"></div>
 
-<div class="container">
-
-   
-    <div class="card">
-        <h2>Racing Concept</h2>
-        <img src="racing.jpg" alt="Racing Mio" class="clickable-img" onclick="openModal(this)">
-        <p>Performance build for speed.</p>
-        <a href="racing.html">View Concept</a>
+    <div id="guide-modal">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h2 id="modal-title" style="font-family: 'Bebas Neue'; font-size: 60px;">BLUEPRINT</h2>
+            <p style="opacity: 0.4; letter-spacing: 5px; font-family: 'JetBrains Mono'; font-size: 10px;">TECHNICAL COMPONENTS</p>
+        </div>
+        <div class="parts-gallery" id="parts-gallery"></div>
+        <button class="close-modal" onclick="closeGuide()">RETURN TO SHOWROOM</button>
     </div>
 
-   
-    <div class="card">
-        <h2>Show Bike Concept</h2>
-        <img src="show.jpg" alt="Show Bike Mio" class="clickable-img" onclick="openModal(this)">
-        <p>Clean and aesthetic build.</p>
-        <a href="showbike.html">View Concept</a>
+    <div id="main-content">
+        <section class="hero">
+            <h1>MIO ONE</h1>
+            <p>THE MEGA TRINITY</p>
+            
+        </section>
+
+        <div class="container">
+            <div class="grid">
+                
+                <div class="concept-card" style="--card-color: var(--primary);">
+                    <div class="model-preview">
+                        <img src="racing.jpg" alt="Racing Model">
+                    </div>
+                    <h2 class="card-title">RACING CORE</h2>
+                    <p style="font-size: 13px; opacity: 0.5; font-family: 'JetBrains Mono';">Liksi & Response / 58.5mm / 28mm</p>
+                    <button class="view-btn" onclick="openGuide('racing')">EXPLORE BLUEPRINT</button>
+                </div>
+
+                <div class="concept-card" style="--card-color: var(--secondary);">
+                    <div class="model-preview">
+                        <img src="show.jpg" alt="Indo Model">
+                    </div>
+                    <h2 class="card-title">INDO CONCEPT</h2>
+                    <p style="font-size: 13px; opacity: 0.5; font-family: 'JetBrains Mono';">Proper Babylook / 14" Velg / Carbon</p>
+                    <button class="view-btn" onclick="openGuide('indo')">EXPLORE BLUEPRINT</button>
+                </div>
+
+                <div class="concept-card" style="--card-color: var(--daily);">
+                    <div class="model-preview">
+                        <img src="street.webp" alt="Street Model">
+                    </div>
+                    <h2 class="card-title">STREET ICON</h2>
+                    <p style="font-size: 13px; opacity: 0.5; font-family: 'JetBrains Mono';">Reliable / Clean / All-Weather</p>
+                    <button class="view-btn" onclick="openGuide('street')">EXPLORE BLUEPRINT</button>
+                </div>
+
+            </div>
+        </div>
+
+        <footer>MIO 1 MEGA CONCEPTS &copy; 2026</footer>
     </div>
 
-  
-    <div class="card">
-        <h2>Daily Concept</h2>
-        <img src="daily.jpeg" alt="Daily Mio" class="clickable-img" onclick="openModal(this)">
-        <p>Comfortable everyday ride.</p>
-        <a href="daily.html">View Concept</a>
-    </div>
+    <script>
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => {
+            cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+        });
 
-</div>
+        const modal = document.getElementById('guide-modal');
+        const gallery = document.getElementById('parts-gallery');
+        const mTitle = document.getElementById('modal-title');
 
+        const buildData = {
+            indo: {
+                title: "INDO CONCEPT BLUEPRINT",
+                color: "#ff00ff",
+                parts: [
+                    { name: "Bi-Led Projector", desc: "Full RGB", img: "bilet.jpg" },
+                    { name: "Bom x mags", desc: "Full Cnc Neck Breaker", img: "mags.jpg" },
+                    { name: "Somjin Carbon Seat", desc: "Indo Stitched Pattern", img: "seat.jpg" }
+                ]
+            },
+            racing: {
+                title: "RACING CORE BLUEPRINT",
+                color: "#00d4ff",
+                parts: [
+                    { name: "58.5mm TDR Block", desc: "Ceramic Cylinder Kit", img: "block.jpg" },
+                    { name: "Keihin PE28", desc: "Sudco Tuned Carb", img: "carb.webp"}
+                ]
+            },
+            street: {
+                title: "STREET ICON BLUEPRINT",
+                color: "#00ff88",
+                parts: [
+                    { name: "Rim Set", desc: "High Reliability mags", img: "rim.webp" },
+                    { name: "Ubox Jrp", desc: "stylist", img: "ubox.jpg" }
+                ]
+            }
+        };
 
-<div id="imgModal" class="modal" onclick="closeModal()">
-    <img id="modalImg">
-</div>
+        function openGuide(concept) {
+            const data = buildData[concept];
+            mTitle.innerText = data.title;
+            mTitle.style.color = data.color;
+            gallery.innerHTML = ''; 
+            data.parts.forEach(part => {
+                const item = document.createElement('div');
+                item.className = 'part-item';
+                item.innerHTML = `
+                    <div class="part-img"><img src="${part.img}"></div>
+                    <div class="part-name" style="color:${data.color}">${part.name}</div>
+                    <p style="font-size:10px; opacity:0.5; font-family:'JetBrains Mono'">${part.desc}</p>
+                `;
+                gallery.appendChild(item);
+            });
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
 
-<script>
-function openModal(img) {
-    document.getElementById("imgModal").style.display = "block";
-    document.getElementById("modalImg").src = img.src;
-}
-function closeModal() {
-    document.getElementById("imgModal").style.display = "none";
-}
-</script>
-
+        function closeGuide() {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 </body>
 </html>
